@@ -42,4 +42,5 @@ print(f"{year} {name} for about ${cost}")
 #  50
 # 100
 # 150
-
+for number in range(0, 150, 50):
+    print(number)
