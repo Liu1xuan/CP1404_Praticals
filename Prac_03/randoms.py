@@ -19,3 +19,4 @@ print(random.uniform(2.5, 5.5))  # line 3
 The smallest number is 2.9266874220270624 and the largest number is 5.04274704242155
 """
 
+print(random.randint(0, 100))
