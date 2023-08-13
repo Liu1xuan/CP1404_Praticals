@@ -1,28 +1,52 @@
 """
 CP1404/CP5632 Practical
-Word Occurrences
+Wimbledon
 """
 
+import csv
+from collections import Counter
 
-def word_count():
-    text = input("Enter a string: ")
-    words = text.split()
-    word_counts = {}
+FILENAME = "wimbledon.csv"
+COUNTRY_INDEX = 1
+CHAMPION_INDEX = 2
 
-    #for each word
-    for word in words:
-        #existed, add 1
-        if word in word_counts:
-            word_counts[word] += 1
-        #new word, insert
-        else:
-            word_counts[word] = 1
 
-    #get the length of longest word
-    longest_word_length = max(len(word) for word in word_counts.keys())
+def main():
+    """create a define meaning."""
+    wimbledon_data = get_data(FILENAME)
+    champions = get_champions(wimbledon_data)
+    countries = list(get_countries(wimbledon_data))
+    countries.sort()
 
-    for word, count in sorted(word_counts.items()):
-        print(f"{word:{longest_word_length}} : {count}")
+    print("Wimbledon Champions:")
+    for champion, count in champions.items():
+        print(f"{champion}: {count}")
+    print()
+    print(f"These {len(countries)} countries have won Wimbledon: ")
+    print(", ".join(countries))
 
-word_count()
+
+def get_data(filename):
+    """Reads a CSV file and returns its data as a list of lists."""
+    with open(filename, "r", encoding="utf-8-sig") as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)  # skip header row
+        data = [row for row in csv_reader]
+    return data
+
+
+def get_champions(wimbledon_data):
+    """calculation the number of championships won by each player."""
+    champions = Counter(row[CHAMPION_INDEX] for row in wimbledon_data)
+    return champions
+
+
+def get_countries(wimbledon_data):
+    """read unique data from csv"""
+    countries = set(row[COUNTRY_INDEX] for row in wimbledon_data)
+    return countries
+
+
+if __name__ == '__main__':
+    main()
 
